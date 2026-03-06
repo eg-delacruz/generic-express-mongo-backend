@@ -16,7 +16,7 @@ export interface AuthRequest extends Request {
 export const authMiddleware = (
   req: AuthRequest,
   res: Response,
-  next: NextFunction
+  next: NextFunction,
 ) => {
   const token = req.cookies?.access_token;
 
@@ -32,20 +32,3 @@ export const authMiddleware = (
     return errorResponse(res, 'Invalid or expired token', 401);
   }
 };
-
-/**
- * In the future, when I implement roles and protected routes, in routes.ts files:
- 
-import { Router } from 'express';
-import { authMiddleware } from '@middlewares/auth.middleware';
-
-const router = Router();
-
-router.get('/me', authMiddleware, (req, res) => {      <-
-  res.json({ user: req.user });
-});
-
-export default router;
-
- * 
- */

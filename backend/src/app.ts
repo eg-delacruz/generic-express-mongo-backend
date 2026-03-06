@@ -7,7 +7,6 @@ import path from 'path';
 import { router } from '@routes/index';
 
 // Middlewares
-import { clientHeaderCheck } from '@middlewares/clientHeader.middleware';
 import { errorHandler } from '@middlewares/error.middleware';
 import { notFoundMiddleware } from '@middlewares/notFound.middleware';
 
@@ -26,8 +25,8 @@ app.use('/uploads', express.static(path.join(process.cwd(), 'uploads')));
 // CORS
 app.use(
   cors({
-    origin: 'http://localhost:5173',
-    credentials: true,
+    origin: 'http://localhost:5173', // Update this to your frontend URL in production
+    credentials: true, // Allow cookies to be sent in CORS requests
   }),
 );
 
@@ -35,10 +34,8 @@ app.use(
 app.use(cookieParser());
 
 // HTTP request logger -> displays the requests in the console
+// It takes 'dev' as an argument, which is a predefined format string that tells morgan to log requests in a concise format that includes the method, URL, status code, response time, and other relevant information. This is useful for development and debugging purposes.
 app.use(morgan('dev'));
-
-// // Client header check middleware
-// app.use(clientHeaderCheck);
 
 // Routes
 app.use('/api', router);
